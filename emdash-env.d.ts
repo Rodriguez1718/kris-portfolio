@@ -72,6 +72,7 @@ export interface Project {
   gallery?: unknown;
   url?: string;
   live_url?: string;
+  tag?: string;
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;

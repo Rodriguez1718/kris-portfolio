@@ -131,6 +131,7 @@ function getImageSrc(img: unknown): string | undefined {
 								href={`/work/${p.id}`}
 								client={p.data.client}
 								year={p.data.year}
+								tags={p.data.tag ? p.data.tag.split(",").map((t) => t.trim()) : []}
 							/>
 						))}
 					</div>

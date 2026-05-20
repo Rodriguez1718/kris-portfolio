@@ -26,6 +26,13 @@ export default defineConfig({
 			weights: [400, 500, 600, 700],
 			fallbacks: ["serif"],
 		},
+		{
+			provider: fontProviders.google(),
+			name: "Syne",
+			cssVariable: "--font-sans-syne",
+			weights: [400, 700, 800],
+			fallbacks: ["sans-serif"],
+		},
 	],
 	devToolbar: { enabled: false },
 });
