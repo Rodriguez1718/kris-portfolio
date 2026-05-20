@@ -15,7 +15,12 @@
 			"slug": "projects",
 			"label": "Projects",
 			"labelSingular": "Project",
-			"supports": ["drafts", "revisions", "search", "seo"],
+			"supports": [
+				"drafts",
+				"revisions",
+				"search",
+				"seo"
+			],
 			"fields": [
 				{
 					"slug": "title",
@@ -68,7 +73,11 @@
 			"slug": "pages",
 			"label": "Pages",
 			"labelSingular": "Page",
-			"supports": ["drafts", "revisions", "search"],
+			"supports": [
+				"drafts",
+				"revisions",
+				"search"
+			],
 			"fields": [
 				{
 					"slug": "title",
@@ -92,7 +101,9 @@
 			"label": "Categories",
 			"labelSingular": "Category",
 			"hierarchical": false,
-			"collections": ["projects"],
+			"collections": [
+				"projects"
+			],
 			"terms": [
 				{
 					"slug": "branding",
@@ -117,35 +128,41 @@
 			"label": "Tags",
 			"labelSingular": "Tag",
 			"hierarchical": false,
-			"collections": ["projects"],
+			"collections": [
+				"projects"
+			],
 			"terms": [
 				{
-					"slug": "identity",
-					"label": "Identity"
+					"slug": "frontend",
+					"label": "Frontend"
 				},
 				{
 					"slug": "ui-ux",
-					"label": "UI/UX"
+					"label": "UI/UX Design"
 				},
 				{
 					"slug": "development",
-					"label": "Development"
+					"label": "Web Development"
 				},
 				{
-					"slug": "art-direction",
-					"label": "Art Direction"
+					"slug": "backend",
+					"label": "Backend"
 				},
 				{
-					"slug": "packaging",
-					"label": "Packaging"
+					"slug": "full-stack",
+					"label": "Full Stack"
 				},
 				{
-					"slug": "ecommerce",
-					"label": "E-commerce"
+					"slug": "react",
+					"label": "React"
 				},
 				{
-					"slug": "editorial",
-					"label": "Editorial"
+					"slug": "astro",
+					"label": "Astro"
+				},
+				{
+					"slug": "mobile",
+					"label": "Mobile"
 				}
 			]
 		}
@@ -310,8 +327,13 @@
 					]
 				},
 				"taxonomies": {
-					"category": ["branding"],
-					"tag": ["identity", "art-direction"]
+					"category": [
+						"branding"
+					],
+					"tag": [
+						"frontend",
+						"ui-ux"
+					]
 				}
 			},
 			{
@@ -371,8 +393,13 @@
 					]
 				},
 				"taxonomies": {
-					"category": ["web"],
-					"tag": ["ui-ux", "development"]
+					"category": [
+						"web"
+					],
+					"tag": [
+						"ui-ux",
+						"development"
+					]
 				}
 			},
 			{
@@ -431,8 +458,13 @@
 					]
 				},
 				"taxonomies": {
-					"category": ["print"],
-					"tag": ["editorial", "art-direction"]
+					"category": [
+						"print"
+					],
+					"tag": [
+						"react",
+						"development"
+					]
 				}
 			},
 			{
@@ -491,8 +523,13 @@
 					]
 				},
 				"taxonomies": {
-					"category": ["photography"],
-					"tag": ["art-direction", "editorial"]
+					"category": [
+						"photography"
+					],
+					"tag": [
+						"full-stack",
+						"astro"
+					]
 				}
 			}
 		]
