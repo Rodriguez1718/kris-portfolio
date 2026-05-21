@@ -1,21 +1,22 @@
 import type { APIRoute } from "astro";
-import { getEmDashCollection, getSiteSettings } from "emdash";
+import { getCollection } from "astro:content";
 
 export const GET: APIRoute = async ({ site, url }) => {
 	const siteUrl = site?.toString() || url.origin;
-	const settings = await getSiteSettings();
-	const siteTitle = settings?.title || "Studio";
-	const siteDescription = settings?.tagline || "Design & Development";
+	const siteTitle = "Kris Rodriguez";
+	const siteDescription = "Design & Development";
 
-	const { entries: projects } = await getEmDashCollection("projects", {
-		orderBy: { published_at: "desc" },
-		limit: 20,
-	});
+	const projects = await getCollection("projects");
+	const sorted = projects.sort(
+		(a, b) =>
+			new Date(b.data.published_at ?? 0).getTime() -
+			new Date(a.data.published_at ?? 0).getTime(),
+	);
 
-	const items = projects
+	const items = sorted
 		.map((project) => {
-			if (!project.data.publishedAt) return null;
-			const pubDate = project.data.publishedAt.toUTCString();
+			if (!project.data.published_at) return null;
+			const pubDate = new Date(project.data.published_at).toUTCString();
 
 			const projectUrl = `${siteUrl}/work/${project.id}`;
 			const title = escapeXml(project.data.title || "Untitled");

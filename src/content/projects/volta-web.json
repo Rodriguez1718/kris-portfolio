@@ -1,0 +1,11 @@
+{
+  "title": "Volta",
+  "client": "Volta Energy",
+  "year": 2024,
+  "summary": "Website design for a renewable energy startup making clean power accessible to everyone.",
+  "featured_image": "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=900&fit=crop",
+  "published_at": "2024-02-01",
+  "content": "Volta is on a mission to make renewable energy accessible to everyone. They needed a website that could explain complex technology simply while inspiring trust in potential customers. We focused on clarity and warmth. The design uses generous whitespace and a vibrant green accent that evokes growth and sustainability without feeling clichéd.",
+  "tag": "ui-ux, development",
+  "url": "https://volta.example.com"
+}

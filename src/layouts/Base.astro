@@ -1,8 +1,4 @@
 ---
-import { getMenu, getSiteSettings, getEmDashCollection } from "emdash";
-import { EmDashHead } from "emdash/ui";
-import { createPublicPageContext } from "emdash/page";
-import { Font } from "astro:assets";
 import "../styles/theme.css";
 
 interface Props {
@@ -14,32 +10,16 @@ interface Props {
 
 const { title, description, image, type = "website" } = Astro.props;
 
-const [settings, menu, { entries: profiles }] = await Promise.all([
-	getSiteSettings(),
-	getMenu("primary"),
-	getEmDashCollection("profiles"),
-]);
-
-const profile = profiles[0];
-const siteTitle = settings?.title || "Studio";
+const siteTitle = "Kris Rodriguez";
+const siteTagline = "Design & Development";
 const fullTitle = title ? `${title} — ${siteTitle}` : siteTitle;
-const siteDescription = settings?.tagline || "Design & Development";
-const siteLogo = (settings?.logo as any)?.url
-	? (settings.logo as { mediaId: string; alt?: string; url: string })
-	: null;
+const siteDescription = description || siteTagline;
 
-const pageCtx = createPublicPageContext({
-	Astro,
-	kind: "custom",
-	pageType: type,
-	title: fullTitle,
-	pageTitle: title ?? siteTitle,
-	description: description || siteDescription,
-	canonical: Astro.url.href,
-	image,
-	seo: { ogImage: image },
-	siteName: siteTitle,
-});
+const navLinks = [
+	{ label: "Work", url: "/work" },
+	{ label: "About", url: "/#about" },
+	{ label: "Contact", url: "/#contact" },
+];
 ---
 
 <!doctype html>
@@ -48,15 +28,17 @@ const pageCtx = createPublicPageContext({
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>{fullTitle}</title>
+		<meta name="description" content={siteDescription} />
+		{image && <meta property="og:image" content={image} />}
+		<meta property="og:type" content={type} />
+		<meta property="og:title" content={fullTitle} />
+		<meta property="og:description" content={siteDescription} />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Syne:wght@400..800&display=swap"
 			rel="stylesheet"
 		/>
-		<EmDashHead page={pageCtx} />
-		<Font cssVariable="--font-serif" preload />
-		<Font cssVariable="--font-sans-syne" preload />
 		<link
 			rel="alternate"
 			type="application/rss+xml"
@@ -82,28 +64,12 @@ const pageCtx = createPublicPageContext({
 	<body>
 		<header class="site-header">
 			<nav class="nav">
-				<a href="/" class="site-title">
-					{
-						siteLogo ? (
-							<img
-								src={siteLogo.url}
-								alt={siteLogo.alt || siteTitle}
-								class="site-logo-img"
-							/>
-						) : (
-							siteTitle
-						)
-					}
-				</a>
+				<a href="/" class="site-title">{siteTitle}</a>
 				<div class="nav-links">
-					{
-						menu?.items.map((item) => (
-							<a href={item.url} target={item.target}>
-								{item.label}
-							</a>
-						))
-					}
-					<a href="/_emdash/admin" class="nav-admin">Admin</a>
+					{navLinks.map((item) => (
+						<a href={item.url}>{item.label}</a>
+					))}
+					<a href="/keystatic" class="nav-admin">Admin</a>
 				</div>
 			</nav>
 		</header>
@@ -115,34 +81,10 @@ const pageCtx = createPublicPageContext({
 		<footer class="site-footer">
 			<div class="footer-content">
 				<div class="footer-brand">
-					<span class="footer-logo">
-						{
-							siteLogo ? (
-								<img
-									src={siteLogo.url}
-									alt={siteLogo.alt || siteTitle}
-									class="footer-logo-img"
-								/>
-							) : (
-								siteTitle
-							)
-						}
-					</span>
-					<p class="footer-tagline">
-						{settings?.tagline || "Design & Development"}
-					</p>
+					<span class="footer-logo">{siteTitle}</span>
+					<p class="footer-tagline">{siteTagline}</p>
 				</div>
 				<div class="footer-right">
-					{
-						profile?.data.resume_url && (
-							<a
-								href={profile.data.resume_url}
-								class="footer-resume-btn"
-								target="_blank">
-								Download Resume
-							</a>
-						)
-					}
 					<div class="theme-switcher">
 						<button
 							type="button"
@@ -164,7 +106,7 @@ const pageCtx = createPublicPageContext({
 						>
 					</div>
 					<p class="footer-powered">
-						Powered by <a href="https://emdashcms.com">EmDash</a>
+						Built with <a href="https://astro.build">Astro</a>
 					</p>
 				</div>
 			</div>
@@ -382,13 +324,6 @@ const pageCtx = createPublicPageContext({
 				color: var(--color-text);
 			}
 
-			.site-logo-img {
-				height: 32px;
-				width: auto;
-				display: block;
-				margin: -4px 0;
-			}
-
 			.nav-links {
 				display: flex;
 				align-items: center;
@@ -420,21 +355,6 @@ const pageCtx = createPublicPageContext({
 
 			.nav-admin:hover {
 				opacity: 1;
-			}
-
-			.nav-resume-btn {
-				border: 1px solid var(--color-text) !important;
-				padding: var(--spacing-xs) var(--spacing-md) !important;
-				background: transparent;
-				color: var(--color-text) !important;
-				transition: all var(--transition-fast) !important;
-				border-radius: 0;
-				margin: 0;
-			}
-
-			.nav-resume-btn:hover {
-				background: var(--color-text) !important;
-				color: var(--color-bg) !important;
 			}
 
 			main {
@@ -469,11 +389,6 @@ const pageCtx = createPublicPageContext({
 				color: var(--color-text);
 			}
 
-			.footer-logo-img {
-				height: 28px;
-				width: auto;
-			}
-
 			.footer-tagline {
 				font-family: var(--font-mono);
 				text-transform: uppercase;
@@ -487,27 +402,6 @@ const pageCtx = createPublicPageContext({
 				flex-direction: column;
 				align-items: flex-end;
 				gap: var(--spacing-lg);
-			}
-
-			.footer-resume-btn {
-				display: inline-flex;
-				align-items: center;
-				padding: var(--spacing-xs) var(--spacing-md);
-				border: 1px solid var(--color-text);
-				background: transparent;
-				color: var(--color-text);
-				text-decoration: none;
-				font-family: var(--font-mono);
-				font-size: var(--font-size-sm);
-				text-transform: uppercase;
-				letter-spacing: 0.05em;
-				transition: all var(--transition-fast);
-				border-radius: 0;
-			}
-
-			.footer-resume-btn:hover {
-				background: var(--color-text);
-				color: var(--color-bg);
 			}
 
 			.theme-switcher {
