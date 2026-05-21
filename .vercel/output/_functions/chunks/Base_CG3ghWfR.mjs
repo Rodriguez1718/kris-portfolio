@@ -1,7 +1,7 @@
 import { a5 as createComponent, aq as renderTemplate, am as renderScript, ao as renderSlot, a1 as addAttribute, aj as renderHead, a4 as createAstro } from './astro/server_cX2-w8Hx.mjs';
 import 'piccolore';
 import 'clsx';
-import { a as getEntry } from './_astro_content_C8WqVO0x.mjs';
+import { a as getEntry } from './_astro_content_C2NIkkJy.mjs';
 /* empty css                           */
 
 var __freeze = Object.freeze;

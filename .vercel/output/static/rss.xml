@@ -6,7 +6,7 @@
     <link>http://localhost:4321</link>
     <atom:link href="http://localhost:4321/rss.xml" rel="self" type="application/rss+xml"/>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 May 2026 03:31:04 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2026 04:04:14 GMT</lastBuildDate>
     <item>
       <title>Smart Resilience</title>
       <link>http://localhost:4321/work/smart-resilience</link>
