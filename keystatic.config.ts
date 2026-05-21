@@ -40,6 +40,16 @@ export default config({
                 content: fields.text({ label: "Bio / Content", multiline: true }),
             },
         }),
+        settings: singleton({
+            label: "Site Settings",
+            path: "src/content/settings/index",
+            format: { data: "json" },
+            previewUrl: "/",
+            schema: {
+                title: fields.text({ label: "Site Title" }),
+                tagline: fields.text({ label: "Site Tagline" }),
+            },
+        }),
     },
     collections: {
         projects: collection({

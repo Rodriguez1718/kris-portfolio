@@ -52,4 +52,12 @@ const contacts = defineCollection({
     }),
 });
 
-export const collections = { projects, about, skills, experiences, contacts };
+const settings = defineCollection({
+    loader: glob({ pattern: "index.json", base: "./src/content/settings" }),
+    schema: z.object({
+        title: z.string(),
+        tagline: z.string().optional(),
+    }),
+});
+
+export const collections = { projects, about, skills, experiences, contacts, settings };

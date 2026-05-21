@@ -1,6 +1,7 @@
 import { a5 as createComponent, aq as renderTemplate, am as renderScript, ao as renderSlot, a1 as addAttribute, aj as renderHead, a4 as createAstro } from './astro/server_cX2-w8Hx.mjs';
 import 'piccolore';
 import 'clsx';
+import { a as getEntry } from './_astro_content_C8WqVO0x.mjs';
 /* empty css                           */
 
 var __freeze = Object.freeze;
@@ -8,12 +9,13 @@ var __defProp = Object.defineProperty;
 var __template = (cooked, raw) => __freeze(__defProp(cooked, "raw", { value: __freeze(cooked.slice()) }));
 var _a;
 const $$Astro = createAstro();
-const $$Base = createComponent(($$result, $$props, $$slots) => {
+const $$Base = createComponent(async ($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
   Astro2.self = $$Base;
   const { title, description, image, type = "website" } = Astro2.props;
-  const siteTitle = "Kris Rodriguez";
-  const siteTagline = "Design & Development";
+  const settingsEntry = await getEntry("settings", "index");
+  const siteTitle = settingsEntry?.data?.title || "Kris Rodriguez";
+  const siteTagline = settingsEntry?.data?.tagline || "Design & Development";
   const fullTitle = title ? `${title} \u2014 ${siteTitle}` : siteTitle;
   const siteDescription = description || siteTagline;
   const navLinks = [
