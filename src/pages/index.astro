@@ -1,41 +1,25 @@
 ---
-import { getEmDashCollection, getSiteSettings } from "emdash";
-import { PortableText } from "emdash/ui";
+import { getCollection, getEntry } from "astro:content";
 import Base from "../layouts/Base.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 
-// Fetch settings + the 4 featured projects in parallel. Limiting and
-// sorting in the database avoids loading every project just to slice
-// off the first 4 in JS (a full-table read on sites with lots of work).
-const [
-	settings,
-	{ entries: featuredProjects, cacheHint },
-	{ entries: profiles },
-	{ entries: abouts },
-	{ entries: skills },
-	{ entries: experiences },
-	{ entries: contacts },
-] = await Promise.all([
-	getSiteSettings(),
-	getEmDashCollection("projects", {
-		orderBy: { published_at: "desc" },
-		limit: 4,
-	}),
-	getEmDashCollection("profiles"),
-	getEmDashCollection("abouts"),
-	getEmDashCollection("skills"),
-	getEmDashCollection("experiences"),
-	getEmDashCollection("contacts"),
-]);
+const allProjects = await getCollection("projects");
+const featuredProjects = allProjects
+	.sort(
+		(a, b) =>
+			new Date(b.data.published_at ?? 0).getTime() -
+			new Date(a.data.published_at ?? 0).getTime(),
+	)
+	.slice(0, 4);
 
-const profile = profiles[0];
-const about = abouts[0];
-const contact = contacts[0];
-
-const title = profile?.data.name || settings?.title || "Studio";
+// Site identity — edit these or load from a settings.json later
+const title = "Kris Rodriguez";
 const titleWords = title.split(" ");
 
-if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+const about = await getEntry("about", "index");
+const skills = await getCollection("skills");
+const experiences = await getCollection("experiences");
+const contacts = await getCollection("contacts");
 ---
 
 <Base>
@@ -121,11 +105,7 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 					style="animation: fadeIn 1s ease-out 0.6s both;">
 					<div class="indigo-line"></div>
 					<p class="hero-tagline">
-						{
-							profile?.data.title ||
-								settings?.tagline ||
-								"Design & Development"
-						}
+						Design &amp; Development
 					</p>
 				</div>
 			</div>
@@ -164,35 +144,33 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 				</div>
 			</div>
 
-			{
-				about?.data.content && (
-					<section class="about" id="about">
-						<div class="about-container">
-							<div class="about-grid">
-								<div class="about-left">
-									<div class="about-sticky">
-										<span class="about-number">
-											[01] // HISTORY
-										</span>
-										<h2 class="about-heading">About Me</h2>
-										<div class="about-badge">
-											<span class="pulse-dot" />
-											<span>Available for Work</span>
-										</div>
-									</div>
-								</div>
-								<div class="about-right">
-									<div class="about-content">
-										<PortableText
-											value={about.data.content}
-										/>
-									</div>
+			<section class="about" id="about">
+				<div class="about-container">
+					<div class="about-grid">
+						<div class="about-left">
+							<div class="about-sticky">
+								<span class="about-number">
+									[01] // HISTORY
+								</span>
+								<h2 class="about-heading">About Me</h2>
+								<div class="about-badge">
+									<span class="pulse-dot" />
+									<span>Available for Work</span>
 								</div>
 							</div>
 						</div>
-					</section>
-				)
-			}
+						<div class="about-right">
+							<div class="about-content">
+								{about?.data?.content ? (
+									<p>{about.data.content}</p>
+								) : (
+									<p>Add your bio in the Keystatic admin at <a href="/keystatic">/keystatic</a>.</p>
+								)}
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 
 			{
 				skills.length > 0 && (
@@ -299,7 +277,7 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 			<section class="empty-state">
 				<h2>No projects yet</h2>
 				<p>Add your first project in the admin panel.</p>
-				<a href="/_emdash/admin/content/projects/new" class="btn">
+				<a href="/keystatic" class="btn">
 					Add a project
 				</a>
 			</section>
@@ -336,15 +314,13 @@ if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
 											</span>
 										</div>
 										<span class="experience-dates">
-											{exp.data.start_date} –{" "}
+											{exp.data.start_date} —{" "}
 											{exp.data.end_date}
 										</span>
 									</div>
 									{exp.data.description && (
 										<div class="experience-description">
-											<PortableText
-												value={exp.data.description}
-											/>
+											<p>{exp.data.description}</p>
 										</div>
 									)}
 								</div>

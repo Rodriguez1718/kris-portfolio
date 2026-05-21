@@ -1,28 +1,40 @@
 ---
-import type { MediaValue } from "emdash";
-import { Image } from "emdash/ui";
-
 interface Props {
 	title: string;
 	summary?: string;
-	featuredImage: MediaValue | string;
+	featuredImage?: { src: string; alt?: string } | string | null;
 	href: string;
 	client?: string;
-	year?: string;
+	year?: number | string;
 	categories?: string[];
 	tags?: string[];
 }
 
 const { title, summary, featuredImage, href, client, year, categories, tags } =
 	Astro.props;
+
 // Combine categories and tags for display
 const allTags = [...(categories || []), ...(tags || [])];
+
+// Resolve image src/alt
+const imgSrc =
+	typeof featuredImage === "string"
+		? featuredImage
+		: featuredImage?.src ?? null;
+const imgAlt =
+	typeof featuredImage === "object" && featuredImage !== null
+		? (featuredImage as { src: string; alt?: string }).alt ?? title
+		: title;
 ---
 
 <article class="project-card">
 	<a href={href} class="card-link">
 		<div class="card-image">
-			<Image image={featuredImage} />
+			{imgSrc ? (
+				<img src={imgSrc} alt={imgAlt} loading="lazy" />
+			) : (
+				<div class="card-image-placeholder" aria-hidden="true" />
+			)}
 			<div class="card-overlay">
 				<span class="card-view">View Project</span>
 			</div>
@@ -75,6 +87,12 @@ const allTags = [...(categories || []), ...(tags || [])];
 		object-fit: cover;
 		transition: transform var(--transition-slow, 300ms ease);
 		filter: grayscale(0.2) contrast(1.1);
+	}
+
+	.card-image-placeholder {
+		width: 100%;
+		aspect-ratio: 4 / 3;
+		background: var(--color-surface);
 	}
 
 	.card-overlay {

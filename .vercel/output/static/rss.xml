@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kris Rodriguez</title>
+    <description>Design &amp; Development</description>
+    <link>http://localhost:4321</link>
+    <atom:link href="http://localhost:4321/rss.xml" rel="self" type="application/rss+xml"/>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 21 May 2026 02:46:17 GMT</lastBuildDate>
+    <item>
+      <title>Volta</title>
+      <link>http://localhost:4321/work/volta-web</link>
+      <guid isPermaLink="true">http://localhost:4321/work/volta-web</guid>
+      <pubDate>Thu, 01 Feb 2024 00:00:00 GMT</pubDate>
+      <description>Website design for a renewable energy startup making clean power accessible to everyone.</description>
+    </item>
+    <item>
+      <title>Meridian</title>
+      <link>http://localhost:4321/work/meridian-brand</link>
+      <guid isPermaLink="true">http://localhost:4321/work/meridian-brand</guid>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 GMT</pubDate>
+      <description>A complete brand identity for a creative collective bringing together artists and technologists.</description>
+    </item>
+    <item>
+      <title>The Archive</title>
+      <link>http://localhost:4321/work/archive-print</link>
+      <guid isPermaLink="true">http://localhost:4321/work/archive-print</guid>
+      <pubDate>Wed, 01 Nov 2023 00:00:00 GMT</pubDate>
+      <description>Exhibition catalog and print materials for a retrospective on modernist architecture.</description>
+    </item>
+    <item>
+      <title>Coastal</title>
+      <link>http://localhost:4321/work/coastal-photo</link>
+      <guid isPermaLink="true">http://localhost:4321/work/coastal-photo</guid>
+      <pubDate>Fri, 01 Sep 2023 00:00:00 GMT</pubDate>
+      <description>A photographic study of the Pacific coastline, exploring the intersection of land, sea, and sky.</description>
+    </item>
+  </channel>
+</rss>
