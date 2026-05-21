@@ -38,7 +38,7 @@ const navLinks = [
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Syne:wght@400..800&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Allura&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Syne:wght@400..800&display=swap"
 			rel="stylesheet"
 		/>
 		<link
@@ -304,10 +304,16 @@ const navLinks = [
 
 		<style>
 			.site-header {
-				max-width: var(--wide-width);
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				max-width: 100%;
 				margin: 0 auto;
 				padding: var(--spacing-xl) var(--spacing-lg);
-				border-bottom: 1px solid var(--color-border);
+				background: transparent;
+				border-bottom: none;
+				z-index: 1000;
 			}
 
 			.nav {

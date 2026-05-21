@@ -104,9 +104,7 @@ const contacts = await getCollection("contacts");
 					class="subtitle-container"
 					style="animation: fadeIn 1s ease-out 0.6s both;">
 					<div class="indigo-line"></div>
-					<p class="hero-tagline">
-						Design &amp; Development
-					</p>
+					<p class="hero-tagline">Design &amp; Development</p>
 				</div>
 			</div>
 		</div>
@@ -154,18 +152,24 @@ const contacts = await getCollection("contacts");
 								</span>
 								<h2 class="about-heading">About Me</h2>
 								<div class="about-badge">
-									<span class="pulse-dot" />
+									<span class="pulse-dot"></span>
 									<span>Available for Work</span>
 								</div>
 							</div>
 						</div>
 						<div class="about-right">
 							<div class="about-content">
-								{about?.data?.content ? (
-									<p>{about.data.content}</p>
-								) : (
-									<p>Add your bio in the Keystatic admin at <a href="/keystatic">/keystatic</a>.</p>
-								)}
+								{
+									about?.data?.content ? (
+										<p data-scramble>{about.data.content}</p>
+									) : (
+										<p data-scramble>
+											Add your bio in the Keystatic admin
+											at{" "}
+											<a href="/keystatic">/keystatic</a>.
+										</p>
+									)
+								}
 							</div>
 						</div>
 					</div>
@@ -490,10 +494,13 @@ const contacts = await getCollection("contacts");
 	}
 
 	.hero-tagline {
-		font-size: var(--font-size-xl);
+		font-size: clamp(1.75rem, 3vw, 2.25rem);
 		color: #d1d5db;
-		font-family: var(--font-serif);
-		font-style: italic;
+		font-family: "Allura", cursive;
+		font-style: normal;
+		font-weight: 400;
+		letter-spacing: 0.03em;
+		line-height: 1.4;
 	}
 
 	@keyframes fadeUp {
@@ -1252,6 +1259,45 @@ const contacts = await getCollection("contacts");
 
 	gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
+	// Text scramble effect function
+	function initScrambleEffect(scrambleEl: Element) {
+		const chars = '!<>-_\\/[]{}—=+*^?#________';
+		const originalText = scrambleEl.textContent || '';
+		
+		// Create random reveal order
+		const indices = Array.from({ length: originalText.length }, (_, i) => i);
+		const shuffled = indices.sort(() => Math.random() - 0.5);
+		const revealOrder = new Map(shuffled.map((idx, order) => [idx, order]));
+		
+		let frame = 0;
+		const maxFrames = originalText.length * 0.5;
+		
+		const interval = setInterval(() => {
+			if (!scrambleEl) {
+				clearInterval(interval);
+				return;
+			}
+			
+			scrambleEl.textContent = originalText
+				.split('')
+				.map((char, index) => {
+					const revealAt = revealOrder.get(index) || 0;
+					if (frame > revealAt) {
+						return originalText[index];
+					}
+					return chars[Math.floor(Math.random() * chars.length)];
+				})
+				.join('');
+			
+			if (frame >= maxFrames) {
+				scrambleEl.textContent = originalText;
+				clearInterval(interval);
+			}
+			
+			frame += 2;
+		}, 12);
+	}
+
 	const initHeroScroll = () => {
 		const hero = document.querySelector(".hero");
 		const heroInner = document.querySelector(".hero-inner") as HTMLElement;
@@ -1350,8 +1396,8 @@ const contacts = await getCollection("contacts");
 			scrollTrigger: {
 				trigger: ".hero",
 				start: "top top",
-				end: "+=120%",
-				scrub: 0.5,
+				end: "+=300%", // Longer scroll distance slows down zoom
+				scrub: 1, // More lag for smoother feel
 				pin: true,
 				pinSpacing: true,
 				invalidateOnRefresh: true,
@@ -1361,9 +1407,8 @@ const contacts = await getCollection("contacts");
 		tl.to(
 			".normal-letter, .title-word:not(:first-child), .subtitle-container, .topo-bg",
 			{
-				opacity: 0,
 				ease: "power1.out",
-				duration: 0.2,
+				duration: 0.5, // Slower fade out
 			},
 		).to(
 			heroInner,
@@ -1372,7 +1417,7 @@ const contacts = await getCollection("contacts");
 				x: () => parseFloat(heroInner.dataset.moveX || "0"),
 				y: () => parseFloat(heroInner.dataset.moveY || "0"),
 				ease: "power2.in",
-				duration: 1,
+				duration: 2, // Slower zoom
 			},
 			0,
 		);
@@ -1395,10 +1440,10 @@ const contacts = await getCollection("contacts");
 			scrollTrigger: {
 				trigger: ".horizontal-scroll-container",
 				start: "top top",
-				end: "+=300%", // Scroll duration of 3 viewport heights for a more comfortable scroll feel
+				end: "+=500%", // Longer scroll distance for slower animation speed
 				pin: true,
 				pinSpacing: true,
-				scrub: 0.5, // Smoothly link all animations directly to the scrollbar!
+				scrub: 1, // Smoother scroll lag so movements are less abrupt
 				invalidateOnRefresh: true,
 			},
 		});
@@ -1430,6 +1475,13 @@ const contacts = await getCollection("contacts");
 					duration: 0.8,
 					stagger: 0.05,
 					ease: "power2.out",
+					onStart: () => {
+						// Trigger scramble when content starts fading in
+						const scrambleEl = document.querySelector('[data-scramble]');
+						if (scrambleEl) {
+							initScrambleEffect(scrambleEl);
+						}
+					}
 				},
 				0,
 			)

@@ -2,9 +2,18 @@ import { config, collection, singleton, fields } from "@keystatic/core";
 import React from "react";
 
 export default config({
-    storage: {
-        kind: "local",
-    },
+    storage: 
+        process.env.NODE_ENV === "production"
+            ? {
+                kind: "github",
+                repo: {
+                    owner: process.env.GITHUB_REPO_OWNER!,
+                    name: process.env.GITHUB_REPO_NAME!,
+                },
+            }
+            : {
+                kind: "local",
+            },
     ui: {
         brand: {
             name: "Kris Portfolio",
