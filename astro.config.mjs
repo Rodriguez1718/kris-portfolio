@@ -4,7 +4,7 @@ import { defineConfig } from "astro/config";
 import keystatic from "@keystatic/astro";
 
 export default defineConfig({
-    output: "static",
+    output: "server",
     adapter: vercel(),
     integrations: [
         react(),
