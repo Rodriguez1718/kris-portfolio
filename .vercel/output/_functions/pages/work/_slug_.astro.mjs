@@ -1,7 +1,7 @@
 import { a5 as createComponent, ah as renderComponent, aq as renderTemplate, a4 as createAstro, ae as maybeRenderHead, a1 as addAttribute } from '../../chunks/astro/server_cX2-w8Hx.mjs';
 import 'piccolore';
-import { a as getEntry, g as getCollection } from '../../chunks/_astro_content_5Ppbv-TS.mjs';
-import { $ as $$Base } from '../../chunks/Base_BgDeQ9u-.mjs';
+import { a as getEntry, g as getCollection } from '../../chunks/_astro_content_C8WqVO0x.mjs';
+import { $ as $$Base } from '../../chunks/Base_BgK_1diF.mjs';
 import { $ as $$ProjectCard } from '../../chunks/ProjectCard_BsHjHDV2.mjs';
 /* empty css                                     */
 export { renderers } from '../../renderers.mjs';

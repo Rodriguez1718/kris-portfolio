@@ -1395,7 +1395,7 @@ const contacts = await getCollection("contacts");
 			scrollTrigger: {
 				trigger: ".horizontal-scroll-container",
 				start: "top top",
-				end: "+=200%", // Scroll duration of 2 viewport heights
+				end: "+=300%", // Scroll duration of 3 viewport heights for a more comfortable scroll feel
 				pin: true,
 				pinSpacing: true,
 				scrub: 0.5, // Smoothly link all animations directly to the scrollbar!
@@ -1414,46 +1414,46 @@ const contacts = await getCollection("contacts");
 					alignOrigin: [0.5, 0.5],
 				},
 				rotation: 720,
-				duration: 2.0,
+				duration: 3.0,
 				ease: "none",
 			},
 			0,
 		);
 
-		// 1. Fade up the about section contents (starts immediately)
+		// 1. Fade up the about section contents (starts immediately, completes fully before slide)
 		horizontalTl
 			.to(
 				".about-number, .about-heading, .about-badge, .about-content > *",
 				{
 					opacity: 1,
 					y: 0,
-					duration: 0.5,
-					stagger: 0.04,
+					duration: 0.8,
+					stagger: 0.05,
 					ease: "power2.out",
 				},
 				0,
 			)
-			// 2. Slide the skills section horizontally into view (starts slightly overlapping)
+			// 2. Slide the skills section horizontally into view (starts after about section has fully faded in and rested)
 			.to(
 				".horizontal-track",
 				{
 					x: "-100vw",
-					duration: 1.2,
+					duration: 1.5,
 					ease: "power2.inOut",
 				},
-				0.1,
+				1.0, // Delay the start of the slide until t = 1.0 (about finishes and sits visible for a bit)
 			)
-			// 3. Fade up the skills section contents as they slide into place (starts mid-slide)
+			// 3. Fade up the skills section contents as they arrive and slide into place
 			.to(
 				".skills-number, .skills-heading, .skills-intro, .skill-row",
 				{
 					opacity: 1,
 					y: 0,
-					duration: 0.5,
-					stagger: 0.04,
+					duration: 0.8,
+					stagger: 0.05,
 					ease: "power2.out",
 				},
-				0.7,
+				1.8, // Starts at t = 1.8 (mid-to-end of the slide animation)
 			);
 	};
 
