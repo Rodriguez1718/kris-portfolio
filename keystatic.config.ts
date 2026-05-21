@@ -3,12 +3,12 @@ import React from "react";
 
 export default config({
     storage: 
-        process.env.NODE_ENV === "production"
+        import.meta.env.PROD
             ? {
                 kind: "github",
                 repo: {
-                    owner: process.env.GITHUB_REPO_OWNER!,
-                    name: process.env.GITHUB_REPO_NAME!,
+                    owner: import.meta.env.GITHUB_REPO_OWNER!,
+                    name: import.meta.env.GITHUB_REPO_NAME!,
                 },
             }
             : {
